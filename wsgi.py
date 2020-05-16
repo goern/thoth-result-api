@@ -46,10 +46,14 @@ __service_version__ = (
 )
 
 
-init_logging()
+init_logging(logging_env_var_start="THOTH_RESULT_API_LOG_")
 application = Flask("thoth.result_api")
 
 _LOGGER = logging.getLogger("thoth.result_api")
+_LOGGER.setLevel(
+    logging.DEBUG if bool(int(os.getenv("RESULT_API_DEBUG", 0))) else logging.INFO
+)
+
 _OPENSHIFT = OpenShift()
 
 
